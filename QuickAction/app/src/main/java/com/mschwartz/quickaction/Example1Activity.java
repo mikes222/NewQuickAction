@@ -48,7 +48,7 @@ public class Example1Activity extends Activity {
             }
         }.setSticky(true);
        
-		final QuickAction mQuickAction 	= new QuickAction(this);
+		final QuickAction<String> mQuickAction 	= new QuickAction(this);
 		
 		mQuickAction.addActionItem(addItem);
 		mQuickAction.addActionItem(acceptItem);
@@ -83,5 +83,13 @@ public class Example1Activity extends Activity {
 				mQuickAction.show(v, "Button2");
 			}
 		});
+
+        Button btn3 = (Button) this.findViewById(R.id.btn3);
+        btn2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mQuickAction.show(v, "Button3");
+            }
+        });
 	}
 }
