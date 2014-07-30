@@ -8,6 +8,9 @@ import android.widget.Toast;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.mschwartz.quickaction.lib.ActionItem;
+import com.mschwartz.quickaction.lib.QuickAction;
+
 /**
  * QuickAction demo activity. 
  * 

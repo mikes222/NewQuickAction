@@ -12,6 +12,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener; 
 import android.widget.PopupWindow;
 
+import com.mschwartz.quickaction.lib.ActionItem;
+import com.mschwartz.quickaction.lib.QuickAction;
+
 /**
  * QuickAction demo activity. 
  * 
