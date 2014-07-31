@@ -41,6 +41,6 @@ Use the library
         });
         
         Button btn1 = (Button) this.findViewById(R.id.btn1);
-        quickAction.bindTo(btn1);
+        quickAction.bindTo(btn1, "Button1");
     }
 
