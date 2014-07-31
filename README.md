@@ -12,28 +12,28 @@ If you are willing to contribute to this fork please contact me.
 create and import the library
 ==============
 
-# check out the project
-# at the libary, right-click "Make module quickactionlib"
-# copy the build/outputs/aar/quickactionlib.aar file to your project module into the subdirectory "libs"
-# add the following to your cradle.build:
+- check out the project
+- at the libary, right-click "Make module quickactionlib"
+- copy the build/outputs/aar/quickactionlib.aar file to your project module into the subdirectory "libs"
+- add the following to your cradle.build:
 
-repositories {
-    flatDir {
-        dirs 'libs'
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
-}
 
-dependencies {
-    compile(name:'quickactionlib', ext:'aar')
-}
+    dependencies {
+        compile(name:'quickactionlib', ext:'aar')
+    }
 
 Use the library
 ==============
 
-protected void onCreate(Bundle savedInstanceState) {
-...
-QuickAction<String> mQuickAction 	= new QuickAction(this);
-mQuickAction.addActionItem(new ActionItem<String>("Whatever") {
+    protected void onCreate(Bundle savedInstanceState) {
+        ...
+        QuickAction<String> mQuickAction 	= new QuickAction(this);
+        mQuickAction.addActionItem(new ActionItem<String>("Whatever") {
             @Override
             public void onClick(String object) {
                 Toast.makeText(getApplicationContext(), getTitle() + " selected for button " + object, Toast.LENGTH_SHORT).show();
@@ -47,5 +47,5 @@ mQuickAction.addActionItem(new ActionItem<String>("Whatever") {
 				mQuickAction.show(v, "Button1");
 			}
 		});
-}
+    }
 
