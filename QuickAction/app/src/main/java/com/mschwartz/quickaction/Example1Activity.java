@@ -79,13 +79,13 @@ public class Example1Activity extends Activity {
 		btn2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
+                //mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
 				mQuickAction.show(v, "Button2");
 			}
 		});
 
         Button btn3 = (Button) this.findViewById(R.id.btn3);
-        btn2.setOnClickListener(new OnClickListener() {
+        btn3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQuickAction.show(v, "Button3");
