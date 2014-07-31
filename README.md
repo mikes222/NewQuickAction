@@ -32,8 +32,8 @@ Use the library
 
     protected void onCreate(Bundle savedInstanceState) {
         ...
-        QuickAction<String> mQuickAction 	= new QuickAction(this);
-        mQuickAction.addActionItem(new ActionItem<String>("Whatever") {
+        QuickAction<String> quickAction 	= new QuickAction(this);
+        quickAction.addActionItem(new ActionItem<String>("Whatever") {
             @Override
             public void onClick(String object) {
                 Toast.makeText(getApplicationContext(), getTitle() + " selected for button " + object, Toast.LENGTH_SHORT).show();
@@ -41,11 +41,6 @@ Use the library
         });
         
         Button btn1 = (Button) this.findViewById(R.id.btn1);
-		btn1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mQuickAction.show(v, "Button1");
-			}
-		});
+        quickAction.bindTo(btn1);
     }
 
