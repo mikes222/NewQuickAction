@@ -7,7 +7,9 @@ import android.content.Context;
 
 import android.graphics.Rect;
 
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.PopupWindow.OnDismissListener;
 
@@ -36,12 +38,12 @@ public class QuickAction<T extends Object> extends PopupWindows implements OnDis
 	private Animation mTrackAnim;
 	private LayoutInflater inflater;
 	private ViewGroup mTrack;
-	private OnDismissListener mDismissListener;
+	private QuickActionListener<T> quickActionListener;
 
     /**
      * The list of actionItems
      */
-	private List<ActionItem> mActionItemList = new ArrayList<ActionItem>();
+	private List<ActionItem<T>> mActionItemList = new ArrayList<ActionItem<T>>();
 	
 	private boolean mDidAction;
 	private boolean mAnimateTrack;
@@ -124,7 +126,7 @@ public class QuickAction<T extends Object> extends PopupWindows implements OnDis
 	 * 
 	 * @param actionItem  {@link ActionItem}
 	 */
-	public void addActionItem(final ActionItem actionItem) {
+	public void addActionItem(final ActionItem<T> actionItem) {
 		mActionItemList.add(actionItem);
 		
 		View container	= (View) inflater.inflate(R.layout.action_item, null);
@@ -169,11 +171,35 @@ public class QuickAction<T extends Object> extends PopupWindows implements OnDis
 			 
 		mTrack.addView(container, mActionItemList.size());
 	}
-	
+
+    public void bindTo(ListView listView) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                T object =  (T)parent.getItemAtPosition(position);
+                show(view, object);
+                if (quickActionListener != null)
+                    quickActionListener.onShow(view, object);
+
+            }
+        });
+    }
+
+    public void bindTo(View view, final T object) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                show(view, object);
+                if (quickActionListener != null)
+                    quickActionListener.onShow(view, object);
+            }
+        });
+    }
+
 	/**
 	 * Show popup mWindow
 	 */
-	public void show (View anchor, T object) {
+	private void show (View anchor, T object) {
         this.object = object;
 		preShow();
 
@@ -276,16 +302,16 @@ public class QuickAction<T extends Object> extends PopupWindows implements OnDis
 	 * Set listener for window dismissed. This listener will only be fired if the quickaction dialog is dismissed
 	 * by clicking outside the dialog or clicking on a sticky item.
 	 */
-	public void setOnDismissListener(QuickAction.OnDismissListener listener) {
+	public void setQuickActionListener(QuickAction.QuickActionListener<T> listener) {
 		setOnDismissListener(this);
 		
-		mDismissListener = listener;
+		quickActionListener = listener;
 	}
 	
 	@Override
 	public void onDismiss() {
-		if (!mDidAction && mDismissListener != null) {
-			mDismissListener.onDismiss();
+		if (!mDidAction && quickActionListener != null) {
+			quickActionListener.onDismiss();
 		}
 	}
 	
@@ -293,7 +319,9 @@ public class QuickAction<T extends Object> extends PopupWindows implements OnDis
 	 * Listener for window dismiss
 	 * 
 	 */
-	public interface OnDismissListener {
+	public interface QuickActionListener<T> {
 		public abstract void onDismiss();
+
+        public abstract void onShow(View view, T object);
 	}
 }

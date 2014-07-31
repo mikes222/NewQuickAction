@@ -27,11 +27,6 @@ import com.mschwartz.quickaction.lib.QuickAction;
  */
 public class Example2Activity extends Activity {
 
-	/**
-	 * Right arrow icon on each listview row
-	 */
-	private ImageView mMoreIv = null;
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,28 +63,35 @@ public class Example2Activity extends Activity {
             }
         };
 		
-		final QuickAction mQuickAction 	= new QuickAction(this);
+		QuickAction quickAction 	= new QuickAction(this);
 		
-		mQuickAction.addActionItem(addItem);
-		mQuickAction.addActionItem(acceptItem);
-		mQuickAction.addActionItem(uploadItem);
+		quickAction.addActionItem(addItem);
+		quickAction.addActionItem(acceptItem);
+		quickAction.addActionItem(uploadItem);
 		
-		//setup on dismiss listener, set the icon back to normal
-		mQuickAction.setOnDismissListener(new PopupWindow.OnDismissListener() {			
-			@Override
-			public void onDismiss() {
-				mMoreIv.setImageResource(R.drawable.ic_list_more);
-			}
-		});
-		
-		mList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mQuickAction.show(view, mList.getItemAtPosition(position));
-				
-				//change the right arrow icon to selected state 
-				mMoreIv = (ImageView) view.findViewById(R.id.i_more);
-				mMoreIv.setImageResource(R.drawable.ic_list_more_selected);
-			}
-		});
+		//setup listener in order to manipulate row when needed
+		quickAction.setQuickActionListener(new QuickAction.QuickActionListener<String>() {
+
+            /**
+             * Right arrow icon on each listview row
+             */
+            private ImageView mMoreIv = null;
+
+            @Override
+            public void onShow(View view, String object) {
+                //change the right arrow icon to selected state
+                mMoreIv = (ImageView) view.findViewById(R.id.i_more);
+                mMoreIv.setImageResource(R.drawable.ic_list_more_selected);
+            }
+
+            @Override
+            public void onDismiss() {
+                mMoreIv.setImageResource(R.drawable.ic_list_more);
+            }
+
+        });
+
+        quickAction.bindTo(mList);
+
     }
 }

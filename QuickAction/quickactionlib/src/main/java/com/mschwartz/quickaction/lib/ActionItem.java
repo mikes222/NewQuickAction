@@ -117,7 +117,9 @@ public abstract class ActionItem<T extends Object> {
     }
 
     /**
-     * Implement this method and do whatever you want to do here.
+     * Implement this method and do whatever you want to do when the actionitem has been clicked.
+     *
+     * @param object an object which refers to the bound item.
      */
     public abstract void onClick(T object);
 }

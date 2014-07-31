@@ -60,36 +60,25 @@ public class Example1Activity extends Activity {
             }
         });
 		
-		mQuickAction.setOnDismissListener(new QuickAction.OnDismissListener() {
+		mQuickAction.setQuickActionListener(new QuickAction.QuickActionListener<String>() {
 			@Override
 			public void onDismiss() {
 				Toast.makeText(getApplicationContext(), "Ups..dismissed", Toast.LENGTH_SHORT).show();
 			}
-		});
-		
-		Button btn1 = (Button) this.findViewById(R.id.btn1);
-		btn1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mQuickAction.show(v, "Button1");
-			}
-		});
 
-		Button btn2 = (Button) this.findViewById(R.id.btn2);
-		btn2.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-                //mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
-				mQuickAction.show(v, "Button2");
-			}
-		});
-
-        Button btn3 = (Button) this.findViewById(R.id.btn3);
-        btn3.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mQuickAction.show(v, "Button3");
+            public void onShow(View view, String object) {
+
             }
         });
+		
+		Button btn1 = (Button) this.findViewById(R.id.btn1);
+        mQuickAction.bindTo(btn1, "Button1");
+
+		Button btn2 = (Button) this.findViewById(R.id.btn2);
+        mQuickAction.bindTo(btn2, "Button2");
+
+        Button btn3 = (Button) this.findViewById(R.id.btn3);
+        mQuickAction.bindTo(btn3, "Button3");
 	}
 }
